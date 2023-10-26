@@ -4,30 +4,30 @@ const User = require('../models/userModels');
 const jwt = require("jsonwebtoken");
 const authMiddleware = require('../middlewares/authMiddleware');
 //Register new user
-router.post('/register', async (req,res)=>{
-    try{
+router.post('/register', async (req, res) => {
+    try {
         const userExists = await User.findOne({
-            email:req.body.email
+            email: req.body.email
         });
-        if (userExists){
+        if (userExists) {
             return res.send({
                 success: false,
                 message: "User Already Exists",
             });
         }
 
-       const salt = await bcrypt.genSalt(10);
-       const hashedPassword = await bcrypt.hash(req.body.password,salt);
-       req.body.password = hashedPassword;
-       
-       const user = new User(req.body);
-       await user.save();
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        req.body.password = hashedPassword;
 
-       return res.send({
-        success :true,
-        message: "User Registerd Successsfully",
-       });
-    }catch (error){
+        const user = new User(req.body);
+        await user.save();
+
+        return res.send({
+            success: true,
+            message: "User Registerd Successsfully",
+        });
+    } catch (error) {
         return res.send({
             success: false,
             message: error.message,
@@ -35,12 +35,12 @@ router.post('/register', async (req,res)=>{
     }
 });
 //Login user
-router.post("/login", async (req, res)=>{
-    try{
-        const user = await User.findOne({email:req.body.email});
-        if (!user){
+router.post("/login", async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) {
             return res.send({
-                success :false,
+                success: false,
                 message: "User not found",
             });
         }
@@ -48,46 +48,46 @@ router.post("/login", async (req, res)=>{
             req.body.password,
             user.password
         );
-        if (!validPassword){
+        if (!validPassword) {
             return res.send({
-                success : false,
+                success: false,
                 message: "Invalid Password",
             });
         }
-        //token generation
-        const token = jwt.sign(
-            {userId : user._id},process.env.jwt_secret || "BLOOD_BANK_APP",{expiresIn: "7d"}
-        )
-        return res.send({ 
+        
+
+        const token = jwt.sign({ userId: user._id }, process.env.jwt_secret, { expiresIn: "7d" })
+
+        return res.send({
             success: true,
             message: "User logged in successfully",
             data: token
         });
 
     }
-    catch (error){
+    catch (error) {
         return res.send({
-    success : false,
-    message: error.message,
-});
- }
+            success: false,
+            message: error.message,
+        });
+    }
 });
 // get current user
-router.get("/get-Current-User",authMiddleware, async(req, res) =>{
-    try{
-        const user =await User.findOne({_id:req.body.userId});
+router.get("/get-Current-User", authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.body.userId });
 
-      
+        // user.password = undefined;
         return res.send({
             success: true,
             message: "User fetched successfully",
-            data:user,
+            data: user,
         });
 
-    }catch (error){
+    } catch (error) {
         return res.send({
-            success:false,
-            message :error.message,
+            success: false,
+            message: error.message,
         });
     }
 });

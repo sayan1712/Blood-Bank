@@ -39,8 +39,8 @@ export default function ProtectedPage({children}) {
     },[]);
 
     return(
-        currentUser &&(<div>
-            <h1>Welcome {getLoggedInUserName(currentUser?.name)}</h1>
+        currentUser && (<div>
+            <h1>Welcome {getLoggedInUserName(currentUser.name)}</h1>
        
            {children}</div>)
     
