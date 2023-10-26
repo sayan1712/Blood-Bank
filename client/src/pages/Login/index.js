@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { LoginUser } from '../../apicalls/users'
 
-import { getAntdInputValidation } from '../../utils/helpers'
+import{ getAntdInputValidation } from '../../utils/helpers'
 
 
 
