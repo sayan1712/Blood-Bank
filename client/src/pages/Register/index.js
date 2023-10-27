@@ -34,11 +34,11 @@ export default function Register() {
       
     }
   };
-  useEffect(()=>{
-    if (localStorage.getItem("token")){
-      navigate("/")
-    }
-  },[])
+  // useEffect(()=>{
+  //   if (localStorage.getItem("token")){
+  //     navigate("/")
+  //   }
+  // },[])
   
   
   
