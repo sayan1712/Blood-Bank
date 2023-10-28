@@ -7,7 +7,7 @@ export default function OrgHospitalForm({type}) {
     <>
     <Form.Item
     label={type==="Hospital" ? "Hospital Name" : "Organization Name"}
-    name={type==="Hospital" ? "hospitalName" : "OrganizationName"} rules={getAntdInputValidation('Name')}
+    name="name" rules={getAntdInputValidation('Name')}
     > 
       
     <Input/>
