@@ -76,8 +76,9 @@ router.post("/login", async (req, res) => {
 router.get("/get-Current-User", authMiddleware, async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.body.userId });
-
-        // user.password = undefined;
+         
+        // Remove the user object password
+        //user.password = undefined;
         return res.send({
             success: true,
             message: "User fetched successfully",
