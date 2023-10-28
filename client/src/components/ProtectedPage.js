@@ -43,23 +43,24 @@ export default function ProtectedPage({ children }) {
         currentUser && (
         <div>
             {/* header   */ }
-        <div className="flex justify-between items-center bg-primary text-white px-5 py-3">
+
+            <div className="flex justify-between items-center bg-primary text-white px-5 py-3">
              <div>
                 <h3 className="text-1xl"> BLOODBANK</h3>
               <span className="text-xs">{currentUser.userType.toUpperCase()}</span>
               </div>
-               <div className="flex items-center gap-1 ">  
+
+           <div className="flex items-center gap-1 ">  
            <i class="ri-shield-user-fill"></i>
                 <div className="flex flex-col">
                 <span className="mr-5 text-2xs cursor-pointer"> {currentUser.name.toUpperCase()}</span>
                 </div>  
-                <button>
                 <i className="ri-logout-circle-r-line ml-5 cursor-pointer"
                  onClick={() => {
                             localStorage.removeItem("token");
                             navigate("/login");
-                 } } 
-                >Logout</i></button>
+                 } }
+                ></i>
            </div>
        </div>
                 
@@ -69,6 +70,6 @@ export default function ProtectedPage({ children }) {
         </div>
             )
 
-    )
+    );
 
 }
