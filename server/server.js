@@ -10,4 +10,4 @@ app.use(express.json());
 const userRoute=require('./routes/userRoute');
 app.use('/api/users',userRoute);
 
-app.listen(port, () => console.log(`Node JS server Started ${port} ${JWT_SECRET}`));
+ app.listen(port, () => console.log(`Node JS server Started ${port} ${JWT_SECRET}`));
