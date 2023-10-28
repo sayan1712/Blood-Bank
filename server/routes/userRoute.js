@@ -3,6 +3,9 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/userModels');
 const jwt = require("jsonwebtoken");
 const authMiddleware = require('../middlewares/authMiddleware');
+const JWT_SECRET = process.env.jwt_secret || "blood_bank_app";
+
+
 //Register new user
 router.post('/register', async (req, res) => {
     try {
