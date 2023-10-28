@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/userModels');
 const jwt = require("jsonwebtoken");
 const authMiddleware = require('../middlewares/authMiddleware');
-const JWT_SECRET = process.env.jwt_secret || "blood_bank_app";
+const JWT_SECRET = process.env.jwt_secret || "blood_bank_app";    // stirng is undefined thats why value is given 
 
 
 //Register new user
@@ -59,7 +59,7 @@ router.post("/login", async (req, res) => {
         }
         
 
-        const token = jwt.sign({ userId: user._id }, process.env.jwt_secret, { expiresIn: "7d" })
+        const token = jwt.sign({ userId: user._id }, "blood_bank_app", { expiresIn: "7d" })      //jwt_secret value is directly written
 
         return res.send({
             success: true,
