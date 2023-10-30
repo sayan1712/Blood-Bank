@@ -8,6 +8,9 @@ const JWT_SECRET = process.env.jwt_secret || "blood_bank_app";
 app.use(express.json());
 
 const userRoute=require('./routes/userRoute');
+const inventoryRoute=require('./routes/inventoryRoute');
+
 app.use('/api/users',userRoute);
+app.use('/api/inventory',inventoryRoute);
 
  app.listen(port, () => console.log(`Node JS server Started ${port} ${JWT_SECRET}`));

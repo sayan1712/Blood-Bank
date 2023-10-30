@@ -47,6 +47,13 @@ router.post("/login", async (req, res) => {
                 message: "User not found",
             });
         }
+
+        if(user.userType !== req.body.userType){
+             return res.send({
+                success: false,
+                message: `User is not registered as ${req.body.userType}`,
+            });
+        }
         const validPassword = await bcrypt.compare(
             req.body.password,
             user.password

@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { Modal, Form,Input,Radio, message } from 'antd'; 
 import {getAntdInputValidation} from "../../../utils/helpers";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AddInventory } from '../../../apicalls/inventory';
 import { SetLoading } from '../../../redux/loadersSlice';
 
 
 export default function InventoryForm({open, setOpen, reloadData}) {
+    const {currentUser} = useSelector(state => state.users); 
     const[form] = Form.useForm();
     const[inventoryType,setInventoryType]= useState("IN");
     const dispatch = useDispatch();
@@ -16,9 +17,11 @@ export default function InventoryForm({open, setOpen, reloadData}) {
             const response= await AddInventory({
                 ...values,
                 inventoryType,
+                organization: currentUser._id,
             });
             dispatch(SetLoading(false));
             if(response.success){
+                reloadData()
                 message.success("Inventory Added Successfully")
                 setOpen(false)
             }
@@ -46,12 +49,12 @@ export default function InventoryForm({open, setOpen, reloadData}) {
                 <Radio.Group 
                 value={inventoryType}
                 onChange={(e)=> setInventoryType(e.target.value)}>
-                    <Radio value="IN"></Radio>
-                    <Radio value="OUT"></Radio>
+                    <Radio value="in">In</Radio>
+                    <Radio value="out">Out</Radio>
 
                 </Radio.Group>
             </Form.Item>
-            <Form.Item label = "Blood Group" name="bloodgroup" rules={getAntdInputValidation()}>
+            <Form.Item label = "Blood Group" name="bloodGroup" rules={getAntdInputValidation()}>
                 <select name="" id="">
                     <option value="a+">A+</option>
                     <option value="a-">A-</option>
@@ -67,7 +70,7 @@ export default function InventoryForm({open, setOpen, reloadData}) {
 
                 </select>
             </Form.Item>
-            <Form.Item label ={inventoryType==="OUT"? "Hospital Email" : "Donor Email"}
+            <Form.Item label ={inventoryType==="out"? "Hospital Email" : "Donor Email"}
             name="email" rules={getAntdInputValidation()} >
                 <Input type="email"/>
             </Form.Item>
