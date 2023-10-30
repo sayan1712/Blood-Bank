@@ -53,7 +53,9 @@ export default function ProtectedPage({ children }) {
            <div className="flex items-center gap-1 ">  
            <i class="ri-shield-user-fill"></i>
                 <div className="flex flex-col">
-                <span className="mr-5 text-2xs cursor-pointer"> {currentUser.name.toUpperCase()}</span>
+                <span className="mr-5 text-2xs cursor-pointer"
+                onClick={() => navigate("/profile")}
+                > {currentUser.name.toUpperCase()}</span>
                 </div>  
                 <i className="ri-logout-circle-r-line ml-5 cursor-pointer"
                  onClick={() => {
@@ -66,7 +68,7 @@ export default function ProtectedPage({ children }) {
                 
                 {/* body */}
 
-            <div className="p-5">{children}</div>
+            <div className="px-5 py-2">{children}</div>
         </div>
             )
 
