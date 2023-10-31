@@ -2,7 +2,8 @@ import { Tabs } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import Inventory from "./Inventory";
-
+import Donors from './Donors'
+import Hospitals from './Hospitals'
 
 //import Hospitals from "./Hospitals";
 
@@ -18,11 +19,11 @@ export default function Profile() {
                  </Tabs.TabPane>
 
                  <Tabs.TabPane tab="Donors" key="2">
-                  {/* <Donors/> */}
+                  <Donors/>
                   </Tabs.TabPane>
 
                   <Tabs.TabPane tab="Hospital" key="3">
-                  {/* <Donors/> */}
+                   <Hospitals/> 
                   </Tabs.TabPane>
                   </>
                   

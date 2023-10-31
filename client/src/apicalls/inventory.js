@@ -7,3 +7,4 @@ export const AddInventory = (data) =>{
 export const getInventory = (data) =>{
     return axiosInstance('get','/api/inventory/get');
 }
+

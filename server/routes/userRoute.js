@@ -4,7 +4,8 @@ const User = require('../models/userModels');
 const jwt = require("jsonwebtoken");
 const authMiddleware = require('../middlewares/authMiddleware');
 const JWT_SECRET = process.env.jwt_secret || "blood_bank_app";    // stirng is undefined thats why value is given 
-
+ const Inventory =  require ("../models/inventoryModel");
+ const  mongoose = require("mongoose");
 
 //Register new user
 router.post('/register', async (req, res) => {
@@ -101,6 +102,64 @@ router.get("/get-Current-User", authMiddleware, async (req, res) => {
             message: error.message,
         });
     }
+});
+
+
+
+//get all unique donors
+
+   router.get("/get-all-donors",authMiddleware,async(req,res) =>{
+
+        try{
+        const organization = new mongoose.Types.ObjectId(req.body.userId);
+        const uniqueDonorIds = await Inventory.distinct("donor", {
+            organization,
+        })
+
+        const donors = await User.find({
+            _id: { $in: uniqueDonorIds }
+        })
+               return res.send({
+                        success:true,
+                        message: "Donor fetched successfully",
+                        data: donors         
+                        })         
+
+           } catch (error) {
+             return res.send( {
+                  success:false,
+                  message: error.message,               
+ 
+             });
+
+        };
+    
+});
+
+
+   router.get("/get-all-hospitals",authMiddleware,async(req,res)=>{
+    try{
+        //get all unique hospital ids from inventory
+        const organization =new mongoose.Types.ObjectId(req.body.userId);
+        const uniqueHospitalIds =await Inventory.distinct("hospital",{
+            organization,
+        });
+
+        const hospitals= await User.find({
+        _id: { $in:uniqueHospitalIds  },
+         });
+
+         return res.send({
+                success: true,
+                message : "Hospitals fetched successfully",
+                data: hospitals,
+         });
+       }   catch(error){
+          return res.send ({
+               success:false,
+               message: error.message,
+         });
+       }
 });
 
 module.exports = router;

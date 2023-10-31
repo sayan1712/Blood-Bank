@@ -57,7 +57,6 @@ router.post('/add', authMiddleware, async(req, res)=>{
 				},
 			},
 
-
 				])
 
 			const totalOut = totalOutOfRequestedGroup[0]?.total || 0;
