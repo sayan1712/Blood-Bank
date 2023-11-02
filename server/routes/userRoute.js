@@ -103,12 +103,8 @@ router.get("/get-Current-User", authMiddleware, async (req, res) => {
         });
     }
 });
-
-
-
 //get all unique donors
-
-   router.get("/get-all-donors",authMiddleware,async(req,res) =>{
+router.get("/get-all-donors",authMiddleware,async(req,res) =>{
 
         try{
         const organization = new mongoose.Types.ObjectId(req.body.userId);
@@ -132,12 +128,10 @@ router.get("/get-Current-User", authMiddleware, async (req, res) => {
  
              });
 
-        };
-    
+        }; 
 });
 
-
-   router.get("/get-all-hospitals",authMiddleware,async(req,res)=>{
+router.get("/get-all-hospitals",authMiddleware,async(req,res)=>{
     try{
         //get all unique hospital ids from inventory
         const organization =new mongoose.Types.ObjectId(req.body.userId);
@@ -161,5 +155,48 @@ router.get("/get-Current-User", authMiddleware, async (req, res) => {
          });
        }
 });
+
+router.get("/get-all-organization-for-donor",authMiddleware , async(req,res) =>{
+    try{
+        // get all unique hospital ids from inventory
+        const donor = new mongoose.Types.ObjectId(req.body.userId);
+        const uniqueOrganizationIds= await Inventory.distinct("organization",{donor});
+        const hospitals=await User.find({_id :{$in:uniqueOrganizationIds},});
+
+        return res.send({
+            success: true,
+            message: "Hospitals fetched successfully",
+            data: hospitals,
+        });
+    }
+    catch(error){
+        return res.send({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
+router.get("/get-all-organizations-of-a-hospital",authMiddleware , async(req,res) =>{
+    try{
+        // get all unique hospital ids from inventory
+        const hospital =new mongoose.Types.ObjectId(req.body.userId);
+        const uniqueOrganizationIds= await Inventory.distinct("organization",{hospital});
+        const hospitals=await User.find({_id :{$in:uniqueOrganizationIds},});
+
+        return res.send({
+            success: true,
+            message: "Hospitals fetched successfully",
+            data: hospitals,
+        });
+    }
+    catch(error){
+        return res.send({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
 
 module.exports = router;

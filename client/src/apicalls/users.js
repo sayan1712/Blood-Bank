@@ -21,3 +21,11 @@ export const GetCurrentUser=async () => {
                export const GetAllHospitalsOfAnOrganization = () =>{
                 return axiosInstance("get" , `/api/users/get-all-hospitals`);
               }; 
+
+export const GetAllOrganizationsOfADonor =() => {
+    return axiosInstance("get","/api/users/get-all-organization-for-donor");
+}
+
+export const GetAllOrganizationsOfAHospital =() => {
+    return axiosInstance("get","/api/users/get-all-organizations-of-a-hospital");
+}

@@ -8,3 +8,6 @@ export const getInventory = (data) =>{
     return axiosInstance('get','/api/inventory/get');
 }
 
+export const GetInventoryWithFilters = (data)=>{
+    return axiosInstance("post","/api/inventory/filter", { filters:  data });
+}

@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import Inventory from "./Inventory";
 import Donors from './Donors'
 import Hospitals from './Hospitals'
+import Organizations from './Organizations'
+import InventoryTable from '../../components/InventoryTable'
 
 //import Hospitals from "./Hospitals";
 
@@ -28,15 +30,34 @@ export default function Profile() {
                   </>
                   
            )}
-          {/* {currentUser.userType === "donar" &&  (
-          <>
-          <Tabs.TabPane tab="Donations" key="1">
+
+                  { currentUser.userType === "Donor"  && (
+                    <>
+                 <Tabs.TabPane tab="Donations" key="4">
+                    <InventoryTable filters={{inventoryType: "in", donor: currentUser._id}} userType="Donor"/>
+
                  </Tabs.TabPane>
-          <Tabs.TabPane tab="Organizations" key="2">
-              <organizations/>
-                 </Tabs.TabPane>     
-          </>
-          )} */}
+
+                 <Tabs.TabPane tab="Organizations" key="5">
+            
+                 <Organizations userType="Donor"/>
+                 </Tabs.TabPane></>
+                  
+           )}
+
+{ currentUser.userType === "Hospital"  && (
+                    <>
+                 <Tabs.TabPane tab="Consumptions" key="6">
+                  <InventoryTable filters={{inventoryType: "out", hospital: currentUser._id}} userType="Hospital"/>
+                 </Tabs.TabPane>
+
+                 <Tabs.TabPane tab="Organizations" key="7">
+                 <Organizations userType="hospital"/>
+                 </Tabs.TabPane></>
+                  
+           )}
+
+          
               </Tabs>
         </div>
   );
