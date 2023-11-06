@@ -6,7 +6,7 @@ import { SetLoading } from '../redux/loadersSlice';
 import { getDateFormat } from '../utils/helpers';
 import { Button } from 'antd';
 
-export default function InventoryTable({filters, userType}) {
+export default function InventoryTable({filters, userType, limit}) {
   const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ render: (text, record) =>  record.organization.name
     const getData = async()=>{
 try {
     dispatch(SetLoading(true));
-    const response = await GetInventoryWithFilters(filters);
+    const response = await GetInventoryWithFilters(filters, limit);
     console.log(response.data)
     dispatch(SetLoading(false));
     if (response.success) {

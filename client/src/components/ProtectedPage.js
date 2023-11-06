@@ -44,9 +44,9 @@ export default function ProtectedPage({ children }) {
         <div>
             {/* header   */ }
 
-            <div className="flex justify-between items-center bg-primary text-white px-5 py-3">
+            <div className="flex justify-between mx-5 items-center bg-primary text-white px-5 py-3">
              <div>
-                <h3 className="text-1xl"> BLOODBANK</h3>
+                <h3 className="text-1xl cursor-pointer" onClick={()=> navigate("/")}> BLOODBANK</h3>
               <span className="text-xs">{currentUser.userType.toUpperCase()}</span>
               </div>
 
