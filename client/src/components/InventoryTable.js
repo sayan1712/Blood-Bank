@@ -26,7 +26,15 @@ render: (text) => text + " ML"
 }, {
 title: "Reference",
 dataIndex: "reference", 
-render: (text, record) =>  record.organization.name
+render: (text, record) =>  {
+if(userType === "Organization"){
+
+return record.inventoryType === "in" ? record.donor?.name : record.hospital?.name;
+} else{
+return record.organization.name
+
+}
+}
 
 
 }, {
@@ -34,6 +42,20 @@ render: (text, record) =>  record.organization.name
     dataIndex: "createdAt",
     render: (text) => getDateFormat(text)
 }]
+
+
+    if(userType === "Hospital"){
+        columns.splice(0, 1);
+        columns[2].title = "Organization Name"
+        columns[3].title = "Consumed On"
+    }
+
+
+    if(userType === "Donor"){
+        columns.splice(0, 1);
+        columns[2].title = "Organization Name"
+        columns[3].title = "Donated On"
+    }
 
     const getData = async()=>{
 try {

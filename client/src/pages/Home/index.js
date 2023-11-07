@@ -43,11 +43,9 @@ useEffect(() => {
 
   return (
     <div>
-        <span className= "text-primary text-2xl" >
-              welcome  {  currentUser.name}
-        </span>
-
-        <div className="grid grid-cols-4 gap-5 my-5">
+          {
+            currentUser.userType === "Organization" && <>
+            <div className="grid grid-cols-4 gap-5 my-5">
             {bloodGroupsData.map((bloodGroup,index) => {
              const color=colors[index];
                   return (<div
@@ -84,14 +82,39 @@ useEffect(() => {
             </div>
                   );
             })}                               
+          }
         </div>
-        <span className="text-xl text-gray-700 "> Your Recent Inventory
+        <span className="text-xl text-gray-700 "> Your Recent Donations
         </span>
         <InventoryTable 
         filters = {{ organization: currentUser._id }}
         limit={5}
         userType={currentUser.userType}
-        />
+        /></>
+          }
+          
+          {
+            currentUser.userType === "Donor" && <>
+        <h1 className="text-xl text-gray-700 "> Your Recent Inventory
+        </h1>
+        <InventoryTable 
+        filters = {{ donor: currentUser._id }}
+        limit={5}
+        userType={currentUser.userType}
+        /></>
+          }
+
+          {
+            currentUser.userType === "Hospital" && <>
+        <h1 className="text-xl text-gray-700 "> Your Recent Requests/Consumptions
+        </h1>
+        <InventoryTable 
+        filters = {{ hospital: currentUser._id }}
+        limit={5}
+        userType={currentUser.userType}
+        /></>
+          }
+          
      </div>
   )
 }  
